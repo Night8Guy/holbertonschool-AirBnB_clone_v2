@@ -319,9 +319,7 @@ class HBNBCommand(cmd.Cmd):
     def help_update(self):
         """ Help information for the update command """
         print("Updates an instance based on the class name and id")
-        print("[Usage]: update <className> <objectId> <attributeName> "
-           "<attributeValue>\n")
-
+        print("Usage: update <className> <id> <attName> <attVal>\n")
 
     def help_help(self):
         """ Help information for the help command """
