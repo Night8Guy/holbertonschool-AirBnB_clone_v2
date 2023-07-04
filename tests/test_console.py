@@ -131,17 +131,3 @@ class test_console(unittest.TestCase):
         console.onecmd("create Binita")
         x = (self.capt_out.getvalue())
         self.assertEqual("** class doesn't exist **\n", x)
-
-        if __name__ == '__main__':
-    unittest.main()
-
-    '''
-    def test_destroy(self):
-        console = self.create()
-        self.assertTrue(console.onecmd("destroy"))
-
-    def test_update(self):
-        console = self.create()
-        self.assertTrue(console.onecmd("update"))
-
-    ...
