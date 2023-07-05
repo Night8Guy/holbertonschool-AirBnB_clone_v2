@@ -152,3 +152,13 @@ class TestConsole(unittest.TestCase):
         with self.assertRaises(SystemExit) as cm:
             self.console.onecmd("quit")
         self.assertEqual(cm.exception.code, None)
+
+
+class TestConsole(unittest.TestCase):
+    # ...
+    
+    def test_EOF(self):
+        with self.assertRaises(SystemExit) as cm:
+            self.console.onecmd("EOF")
+        self.assertEqual(cm.exception.__class__, SystemExit)
+        self.assertEqual(cm.exception.code, None)
