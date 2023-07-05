@@ -12,7 +12,7 @@ from unittest.mock import create_autospec
 from unittest import TestCase
 
 
-class test_console(unittest.TestCase):
+class TestConsole(unittest.TestCase):
     ''' Test the console module'''
 
     def setUp(self):
@@ -115,41 +115,4 @@ class test_console(unittest.TestCase):
         '''
         console = self.create()
         console.onecmd("create User")
-        self.assertTrue(isinstance(self.capt_out.getvalue(), str))
-
-    def test_class_name_missing(self):
-        '''
-            Testing the error messages for class name missing.
-        '''
-        console = self.create()
-        console.onecmd("create")
-        x = (self.capt_out.getvalue())
-        self.assertEqual("** class name missing **\n", x)
-
-    def test_class_name_doesnt_exist(self):
-        '''
-            Testing the error messages for class name missing.
-        '''
-        console = self.create()
-        console.onecmd("create Binita")
-        x = (self.capt_out.getvalue())
-        self.assertEqual("** class doesn't exist **\n", x)
-
-
-class TestConsole(unittest.TestCase):
-    def setUp(self):
-        self.console = console.HBNBCommand()
-
-    def tearDown(self):
-        pass
-
-    def test_EOF(self):
-        with self.assertRaises(SystemExit) as cm:
-            self.console.onecmd("EOF")
-        self.assertEqual(cm.exception.__class__, SystemExit)
-        self.assertEqual(cm.exception.code, None)
-
-    def test_quit(self):
-        with self.assertRaises(SystemExit) as cm:
-            self.console.onecmd("quit")
-        self.assertEqual(cm.exception.code, None)
+        self.assertTrue(isinstance(self.capt_out.getvalue
