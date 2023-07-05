@@ -48,3 +48,31 @@ class FileStorage:
                     self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
+
+    def test_create_with_params(self):
+        """Test create with params"""
+        # Test creating a State with name="California"
+    self.console.onecmd('create State name="California"')
+    state_id = self.console.stdout.getvalue().strip()
+    self.assertTrue(state_id)
+
+    # Test creating a State with name="Arizona"
+    self.console.onecmd('create State name="Arizona"')
+    state_id = self.console.stdout.getvalue().strip()
+    self.assertTrue(state_id)
+
+    # Test creating a Place with multiple parameters
+    self.console.onecmd('create Place city_id="0001" user_id="0001" name="My_little_house" number_rooms=4 number_bathrooms=2 max_guest=10 price_by_night=300 latitude=37.773972 longitude=-122.431297')
+    place_id = self.console.stdout.getvalue().strip()
+    self.assertTrue(place_id)
+
+    # Test showing all State objects
+    self.console.onecmd('all State')
+    output = self.console.stdout.getvalue().strip()
+    self.assertIn('California', output)
+    self.assertIn('Arizona', output)
+
+    # Test showing all Place objects
+    self.console.onecmd('all Place')
+    output = self.console.stdout.getvalue().strip()
+    self.assertIn('My little house', output)pass
