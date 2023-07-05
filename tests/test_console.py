@@ -135,8 +135,7 @@ class test_console(unittest.TestCase):
         x = (self.capt_out.getvalue())
         self.assertEqual("** class doesn't exist **\n", x)
 
-
-class TestConsole(TestCase):
+class TestConsole(unittest.TestCase):
     def setUp(self):
         self.console = console.HBNBCommand()
 
@@ -144,9 +143,11 @@ class TestConsole(TestCase):
         pass
 
     def test_EOF(self):
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(SystemExit) as cm:
             self.console.onecmd("EOF")
+        self.assertEqual(cm.exception.code, None)
 
     def test_quit(self):
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(SystemExit) as cm:
             self.console.onecmd("quit")
+        self.assertEqual(cm.exception.code, None)
