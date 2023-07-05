@@ -5,9 +5,13 @@
 import sys
 import models
 import unittest
+import console
 from io import StringIO
 from console import HBNBCommand
 from unittest.mock import create_autospec
+from unittest import TestCase
+
+
 
 
 class test_console(unittest.TestCase):
@@ -131,3 +135,15 @@ class test_console(unittest.TestCase):
         console.onecmd("create Binita")
         x = (self.capt_out.getvalue())
         self.assertEqual("** class doesn't exist **\n", x)
+
+class TestConsole(TestCase):
+
+    #Exit the program
+
+    def test_EOF(self):
+        with self.assertRaises(SystemExit):
+            console.onecmd("EOF")
+
+    def test_quit(self):
+        with self.assertRaises(SystemExit):
+            console.onecmd("quit")
