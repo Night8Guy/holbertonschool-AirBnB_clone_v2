@@ -11,6 +11,7 @@ from console import HBNBCommand
 from unittest.mock import create_autospec
 from unittest import TestCase
 
+
 class test_console(unittest.TestCase):
     ''' Test the console module'''
 
@@ -76,7 +77,7 @@ class test_console(unittest.TestCase):
         sys.stdout = self.backup
         self.assertEqual("** class name missing **\n", x)
 
-    def test_show_class_name(self):
+    def test_show_instance_id_missing(self):
         '''
             Test show message error for id missing
         '''
@@ -116,7 +117,7 @@ class test_console(unittest.TestCase):
         console.onecmd("create User")
         self.assertTrue(isinstance(self.capt_out.getvalue(), str))
 
-    def test_class_name(self):
+    def test_class_name_missing(self):
         '''
             Testing the error messages for class name missing.
         '''
@@ -125,7 +126,7 @@ class test_console(unittest.TestCase):
         x = (self.capt_out.getvalue())
         self.assertEqual("** class name missing **\n", x)
 
-    def test_class_name_doest_exist(self):
+    def test_class_name_doesnt_exist(self):
         '''
             Testing the error messages for class name missing.
         '''
@@ -134,16 +135,18 @@ class test_console(unittest.TestCase):
         x = (self.capt_out.getvalue())
         self.assertEqual("** class doesn't exist **\n", x)
 
+
 class TestConsole(TestCase):
+    def setUp(self):
+        self.console = console.HBNBCommand()
 
-
-# Exit the program
-
+    def tearDown(self):
+        pass
 
     def test_EOF(self):
         with self.assertRaises(SystemExit):
-            console.onecmd("EOF")
+            self.console.onecmd("EOF")
 
     def test_quit(self):
         with self.assertRaises(SystemExit):
-            console.onecmd("quit")
+            self.console.onecmd("quit")
