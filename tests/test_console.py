@@ -151,4 +151,4 @@ class TestConsole(unittest.TestCase):
     def test_quit(self):
         with self.assertRaises(SystemExit) as cm:
             self.console.onecmd("quit")
-        self.assertEqual(cm.exception.code, 0)
+        self.assertEqual(cm.exception.code, None)
