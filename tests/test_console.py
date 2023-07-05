@@ -13,6 +13,7 @@ from unittest import TestCase
 
 class test_console(unittest.TestCase):
     ''' Test the console module'''
+
     def setUp(self):
         '''setup for'''
         self.backup = sys.stdout
@@ -134,9 +135,11 @@ class test_console(unittest.TestCase):
         self.assertEqual("** class doesn't exist **\n", x)
 
 class TestConsole(TestCase):
-'''
-Exit the program
-'''
+
+
+# Exit the program
+
+
     def test_EOF(self):
         with self.assertRaises(SystemExit):
             console.onecmd("EOF")
