@@ -135,6 +135,7 @@ class test_console(unittest.TestCase):
         x = (self.capt_out.getvalue())
         self.assertEqual("** class doesn't exist **\n", x)
 
+
 class TestConsole(unittest.TestCase):
     def setUp(self):
         self.console = console.HBNBCommand()
