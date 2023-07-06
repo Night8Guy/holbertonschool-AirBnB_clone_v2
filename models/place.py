@@ -57,3 +57,4 @@ class Place(BaseModel, Base):
         def amenities(self, obj):
             if isinstance(obj, Amenity):
                 self.amenity_ids.append(obj.id)
+                

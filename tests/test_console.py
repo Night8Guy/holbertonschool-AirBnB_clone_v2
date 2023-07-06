@@ -112,8 +112,8 @@ class TestConsole(unittest.TestCase):
 
     def test_create(self):
         '''
-            Test that create works
+        Test that create works
         '''
         console = self.create()
         console.onecmd("create User")
-        self.assertTrue(isinstance(self.capt_out.getvalue
+        self.assertTrue(isinstance(self.capt_out.getvalue(), str))
