@@ -103,14 +103,12 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, arg):
         """ Handles EOF to exit program """
         print()
-        return True # instead of exit()
-
+        return True  # instead of exit()
 
     def help_EOF(self):
         """ Prints the help documentation for EOF """
         print("Exits the program without formatting\n")
-        return True # instead of exit()
-
+        return True  # instead of exit()
 
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
@@ -122,13 +120,13 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         return
 
-            args_list = args.split()
-            class_name = args_list[0]
+        args_list = args.split()
+        class_name = args_list[0]
         if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
         return
 
-            obj_params = {}
+        obj_params = {}
         for param in args_list[1:]:
             if "=" not in param:
                 continue
