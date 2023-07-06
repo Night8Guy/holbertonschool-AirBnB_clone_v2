@@ -103,13 +103,15 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, arg):
         """ Handles EOF to exit program """
         print()
-        return True #insteadof exit()
+        return True # instead of exit()
+
 
     def help_EOF(self):
         """ Prints the help documentation for EOF """
         print("Exits the program without formatting\n")
         return True # instead of exit()
-    
+
+
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
         pass
@@ -128,11 +130,11 @@ class HBNBCommand(cmd.Cmd):
 
             obj_params = {}
         for param in args_list[1:]:
-        if "=" not in param:
-            continue
+            if "=" not in param:
+                continue
 
-            key, value = param.split("=")
-            obj_params[key] = value.strip("\"").replace("_", " ")
+                key, value = param.split("=")
+                obj_params[key] = value.strip("\"").replace("_", " ")
 
         try:
             new_instance = HBNBCommand.classes[class_name](**obj_params)
