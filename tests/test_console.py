@@ -10,6 +10,7 @@ from io import StringIO
 from console import HBNBCommand
 from unittest.mock import create_autospec
 from unittest import TestCase
+from unittest.mock import patch
 
 
 class TestConsole(unittest.TestCase):
