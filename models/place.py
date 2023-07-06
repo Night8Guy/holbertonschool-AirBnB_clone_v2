@@ -39,8 +39,20 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    amenities = relationship("Amenity", secondary=place_amenity,
-                             back_populates="place_amenities", viewonly=False)
+    if os.getenv("HBNB_TYPE_STORAGE") == "fs":
+        @property
+        def amenities(self):
+            objlist = []
+            for amenity_id in self.amenity_ids:
+                amenityObj = models.storage.all().get("Amenity.{}".format(amenity_id))
+                if amenityObj:
+                    objlist.append(amenityObj)
+            return objlist
+
+        @amenities.setter
+        def amenities(self, obj):
+            if isinstance(obj, Amenity):
+                self.amenity_ids.append(obj.id)
 
     if os.getenv("HBNB_TYPE_STORAGE") == "fs":
         @property
@@ -57,4 +69,3 @@ class Place(BaseModel, Base):
         def amenities(self, obj):
             if isinstance(obj, Amenity):
                 self.amenity_ids.append(obj.id)
-   
