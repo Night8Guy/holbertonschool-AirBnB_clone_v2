@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
-from models.amenity import Amenity
-from models.place_amenity import PlaceAmenity
 
 
 class FileStorage:
@@ -66,10 +64,6 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                    if "__class__" in val and val["__class__"] == "Amenity":
-                        self.all()[key] = Amenity(**val)
-                    else:
-                        self.all()[key] = classes[val['__class__']](**val)
-
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
