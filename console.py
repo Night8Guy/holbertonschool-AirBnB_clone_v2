@@ -2,14 +2,14 @@
 """ Console Module """
 import cmd
 import sys
+from models import storage
 from models.base_model import BaseModel
-from models.__init__ import storage
-from models.user import User
 from models.place import Place
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] == '{' and pline[-1] == '}'\
+                    if pline[0] == '{' and pline[-1] == '}' \
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -94,7 +94,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, command):
         """ Method to exit the HBNB console"""
-        return True
+        exit()
 
     def help_quit(self):
         """ Prints the help documentation for quit  """
@@ -103,48 +103,45 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, arg):
         """ Handles EOF to exit program """
         print()
-        return True  # instead of exit()
+        exit()
 
     def help_EOF(self):
         """ Prints the help documentation for EOF """
         print("Exits the program without formatting\n")
-        return True  # instead of exit()
 
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
-        """ Create an object with given parameters """
-        if not args:
+    def do_create(self, line):
+        """Usage: create <Class name> <param 1> <param 2> <param 3>..."""
+        if not line:
             print("** class name missing **")
-        return
-
-args_list = args.split()
-class_name = args_list[0]
-if class_name not in HBNBCommand.classes:
-        args_list = args.split()
-        class_name = args_list[0]
-        if class_name not in HBNBCommand.classes:
+            return
+        args = line.split()
+        if args[0] not in HBNBCommand.classes.keys():
             print("** class doesn't exist **")
-    return
+            return
+        kwargs = {}
+        for param in range(1, len(args)):
+            ky, vl = args[param].split("=")
+            if vl[0] == '"':
+                vl = vl.replace('_', ' ').strip('"')
+            else:
+                try:
+                    vl = eval(vl)
+                except (SyntaxError, NameError):
+                    continue
+            kwargs[ky] = vl
+        if len(kwargs) == 0:
+            obj = eval(args[0])()
+        else:
+            obj = eval(args[0])(**kwargs)
+        print(obj.id)
+        obj.save()
 
-obj_params = {}
-for param in args_list[1:]:
-        obj_params = {}
-        for param in args_list[1:]:
-            if "=" not in param:
-                continue
-
-                key, value = param.split("=")
-                obj_params[key] = value.strip("\"").replace("_", " ")
-
-        try:
-            new_instance = HBNBCommand.classes[class_name](**obj_params)
-            new_instance.save()
-            print(new_instance.id)
-        except Exception as e:
-            print("** error creating instance: {}".format(e))
+    def do_hcf(self, line):
+        storage.hcf(eval(line))
 
     def help_create(self):
         """ Help information for the create method """
@@ -207,7 +204,7 @@ for param in args_list[1:]:
         key = c_name + "." + c_id
 
         try:
-            del (storage.all()[key])
+            storage.delete(storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -217,23 +214,18 @@ for param in args_list[1:]:
         print("Destroys an individual instance of a class")
         print("[Usage]: destroy <className> <objectId>\n")
 
-    def do_all(self, args):
+    def do_all(self, line):
         """ Shows all objects, or all objects of a class"""
-        print_list = []
-
-        if args:
-            args = args.split(' ')[0]  # remove possible trailing args
-            if args not in HBNBCommand.classes:
+        if not line:
+            objs = storage.all()
+        if line:
+            args = line.split()
+            if args[0] not in HBNBCommand.classes.keys():
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
-        else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
-
-        print(print_list)
+            else:
+                objs = storage.all(eval(line))
+        print([objs[key].__str__() for key in objs])
 
     def help_all(self):
         """ Help information for the all command """
