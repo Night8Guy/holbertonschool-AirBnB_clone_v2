@@ -1,0 +1,1 @@
+This ReadMe will show us what we can add to project using Flask
